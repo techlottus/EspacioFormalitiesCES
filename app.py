@@ -18,7 +18,7 @@ from apps.tickets_app import tickets_api
 def create_app():
 
     # OpenAPI config
-    info = Info(title='SchoolServices - CredEquivSol, API', version='1.23.1')
+    info = Info(title='SchoolServices - CredEquivSol, API', version='1.24.0')
     security_schemes = {"jwt": HTTPBearer(bearerFormat="JWT")}
 
     # set app using OpenAPI
