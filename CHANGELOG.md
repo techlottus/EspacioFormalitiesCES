@@ -1,5 +1,15 @@
 # Changelog - SchoolServices - CredEquivSol
 
+## [1.25.0] - 2024-05-16
+
+Eduardo Izquierdo Rojas
+
+### Changed:
+Addition of type validation for percentage data 
+and addition of method 'validate_type_value_percentage'
+- services/programs_service.py
+
+
 ## [1.24.0] - 2024-05-16
 
 Eduardo Izquierdo Rojas
