@@ -1,3 +1,5 @@
+![Alt](https://repobeats.axiom.co/api/embed/14505d78589231d9a3c51954c6f2991de95ef210.svg "Repobeats analytics image")
+
 # how to activate existing virtual enviroment 
     pipenv shell
 

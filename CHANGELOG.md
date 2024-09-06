@@ -1,5 +1,30 @@
 # Changelog - SchoolServices - CredEquivSol
 
+## [1.25.0] - 2024-05-16
+
+Eduardo Izquierdo Rojas
+
+### Changed:
+Addition of type validation for percentage data 
+and addition of method 'validate_type_value_percentage'
+- services/programs_service.py
+
+
+## [1.24.0] - 2024-05-16
+
+Eduardo Izquierdo Rojas
+
+### Changed:
+Exceptions were added to break the flow, 
+for when a detail code is not found in the detail code collection "SS_DetailCodes", 
+as well as the exception for when the cost for a specific detail code does not exist,
+- services/degree_service.py
+
+The log service was modified so that it generates log files per day 
+and not just one file each time the service is restarted
+- services/logger_service.py
+
+
 ## [1.23.1] - 2023-11-10
 
 Yair Valdivia

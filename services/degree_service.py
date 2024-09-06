@@ -51,9 +51,13 @@ def fetch_degree_record_detail_code(student_data: StudentData, body_type_value: 
         logger.debug(f"{email} - school: {school}")
         # logger.debug(f"{email} - detail code: {degree_record_document['detailCode']}")
     obj_code = list(filter(lambda code: code['procedure'] == procedure, all_detail_codes))
-    degree_record_detail_code = obj_code[0]['detailCode']
-
-    return degree_record_detail_code
+    if not obj_code:
+        return error_response(503, "The detail code for {procedure : '"+procedure+"'}"
+                              " did not exist in SS_DetailCodes ",
+                              f"There was an error when consulting the degree detail codes"), 503
+    else:
+        degree_record_detail_code = obj_code[0]['detailCode']
+        return degree_record_detail_code
 
 
 def get_list_detail_codes(email, student_data, items, all_detail_codes):
@@ -79,7 +83,11 @@ def get_list_detail_codes(email, student_data, items, all_detail_codes):
 def get_cost(email, list_costs, degree_record_detail_code):
     # logger.debug(f"{email} - get_cost() accessed.")
     cost = list(filter(lambda cost: cost["codeDetail"] == degree_record_detail_code, list_costs))
-    return cost
+    if not cost:
+        return error_response(503, f"There is no cost for the detail code: {degree_record_detail_code}",
+                              f"There was an error when consulting the degree costs"), 503
+    else:
+        return cost
 
 
 def get_all_detail_codes(email, school):

@@ -43,7 +43,7 @@ def format_programs(programs_array: [], prefix: str, student_data, flags_degree)
     checklist = set()
 
     for program in programs_array:
-        if program["porcent"] <= 100.0:
+        if validate_type_value_percentage(program["porcent"]) <= 100.0:
             checklist.add(program["name"])
 
     for nameProgram in checklist:
@@ -97,3 +97,14 @@ def get_flags(student_data, flags_degree, level):
 
     return flags
 
+
+def validate_type_value_percentage(porcent):
+    """
+    this function validate if porcent is string, if string convert to float
+    """
+    if isinstance(porcent, str):
+        try:
+            porcent = float(porcent.replace(",", "."))
+        except ValueError:
+            raise ValueError(f"Cannot convert '{porcent}' to float.")
+    return porcent
