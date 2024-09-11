@@ -17,7 +17,7 @@ RUN pip install --target /dd_tracer/python/ ddtrace
 # DATADOG
 
 # DATADOG
-ENV DD_SERVICE=Espacio-ExtractBanner
+ENV DD_SERVICE=Espacio-FormalitiesCES
 ENV DD_ENV=develop
 ENV DD_VERSION=1
 ENV DD_DBM_PROPAGATION_MODE=full
