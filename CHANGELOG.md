@@ -1,5 +1,25 @@
 # Changelog - SchoolServices - CredEquivSol
 
+## [1.26.0] - 2026-01-22
+
+Eduardo Izquierdo Rojas
+
+### Changed:
+
+Added method 'set_scholarshipTickets_dictumFile()' in endpoint GET /requestAllProcedures/v1
+- apps/tickets_app.py
+
+Added name collection 'SS_Scholarship_Documents'
+- constants/collections_constants.py
+
+Added methods 'set_scholarshipTickets_dictumFile()' to add field 'dictumFile' in tickets
+- services/tickets_service.py
+
+Added repository 'scholarship_documents_repository()' to request mongo collection
+- repositories/scholarship_documents_repository.py
+
+
+
 ## [1.25.0] - 2024-05-16
 
 Eduardo Izquierdo Rojas

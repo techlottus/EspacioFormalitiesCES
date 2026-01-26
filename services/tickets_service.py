@@ -15,6 +15,7 @@ from services.set_responses_service import error_response
 # repositories
 from repositories.keys_repository import keys_repository
 from repositories.ADS_Scores_Medallia_repository import scores_repository
+from repositories.scholarship_documents_repository import scholarship_documents_repository
 
 
 def get_sf_tickets_url(school: str):
@@ -181,3 +182,49 @@ def set_trans_nums_to_tickets_list(
             ticket[transactionNumber_key] = payments_obj[transactionNumber_key]
     logger.debug(f"{email} - tickets array with transaction number: {tickets_list}")
     return tickets_list
+
+
+def set_scholarshipTickets_dictumFile(tickets_list, student_data):
+    """
+    Allow getting record scholarship documents
+    Ensures all tickets have dictumFile attribute (empty string by default)
+    """
+    try:
+        logger.info(f"Processing dictumFile for student: {student_data.enrollmentNumber}")
+
+        # PASO 1: Asegurar que TODOS los tickets tengan dictumFile vacío
+        for record in tickets_list:
+            record['dictumFile'] = ''
+
+        # PASO 2: Buscar documento existente
+        existing_document = scholarship_documents_repository().find_one(
+            {
+                "enrollmentNumber": student_data.enrollmentNumber,
+                "school": student_data.school,
+                "email": student_data.email,
+                "studentId": student_data.studentId,
+                "periodCode": student_data.periodCode
+            }
+        )
+
+        # PASO 3: Si hay documento y tiene numTicket, actualizar el ticket coincidente
+        if existing_document and existing_document.get('numTicket'):
+            num_ticket_buscar = existing_document['numTicket']
+            valor_dictum_file = existing_document.get('dictumFile', '')
+
+            # Buscar y actualizar el ticket coincidente
+            for record in tickets_list:
+                if record.get('numticket') == num_ticket_buscar:
+                    record['dictumFile'] = valor_dictum_file
+                    logger.info(f"Updated dictumFile '{valor_dictum_file}' for ticket: {num_ticket_buscar}")
+                    break  # Si solo hay uno que coincide
+
+        # PASO 4: Retornar lista actualizada (siempre con dictumFile)
+        return tickets_list
+
+    except Exception as e:
+        logger.error(f"Error in set_scholarshipTickets_dictumFile: {e}")
+        # Asegurar atributo incluso en error
+        for record in tickets_list:
+            record.setdefault('dictumFile', '')
+        return error_response(503, str(e), "An error occurred"), 503

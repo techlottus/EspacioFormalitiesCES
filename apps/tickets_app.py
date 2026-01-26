@@ -12,7 +12,8 @@ from services.logger_service import logger
 from services.salesforce_requests_service import request_all_tickets_to_salesforce
 from services.set_responses_service import successful_response_get_method
 from services.tickets_service import get_sf_tickets_url_with_record_types, set_payments_request_body, \
-    set_tickets_list_with_medallia_flags, fetch_tickets_transaction_numbers, set_trans_nums_to_tickets_list
+    set_tickets_list_with_medallia_flags, fetch_tickets_transaction_numbers, set_trans_nums_to_tickets_list, \
+    set_scholarshipTickets_dictumFile
 # utils
 from utils.decoder import get_student_data
 
@@ -75,7 +76,9 @@ def tickets_controller(header: Headers):
         trans_numbers_dict_list
     )
 
+    tickets_with_dictumFile = set_scholarshipTickets_dictumFile(tickets_with_trans_nums_list, student_data)
+
     # SEND RESPONSE
     info_message = f"List of {total_valid_tickets} tickets with transaction number sent"
     logger.info(f"{email} - {info_message}")
-    return successful_response_get_method(tickets_with_trans_nums_list, info_message)
+    return successful_response_get_method(tickets_with_dictumFile, info_message)
